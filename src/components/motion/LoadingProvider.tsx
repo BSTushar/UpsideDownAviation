@@ -21,7 +21,7 @@ function isPageReload(): boolean {
 /**
  * Loading screen runs only on:
  * 1. Browser refresh (F5 / reload)
- * 2. Explicit startLoading() — e.g. form submit buttons
+ * 2. Explicit startLoading() — e.g. Student Portal nav, form submit
  */
 export function LoadingProvider({ children }: { children: ReactNode }) {
   const [reloadLoad, setReloadLoad] = useState(false);

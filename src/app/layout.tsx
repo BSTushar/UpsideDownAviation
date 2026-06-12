@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import Script from "next/script";
+import { Inter, JetBrains_Mono, Saira_Condensed } from "next/font/google";
 import "@/styles/globals.css";
 import { SITE } from "@/lib/constants";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -18,6 +19,13 @@ const mono = JetBrains_Mono({
   variable: "--font-inktrap-mono",
   display: "swap",
   weight: ["400", "500"],
+});
+
+const display = Saira_Condensed({
+  subsets: ["latin"],
+  variable: "--font-saira",
+  display: "swap",
+  weight: ["500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -57,8 +65,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${sans.variable} ${mono.variable}`}>
+    <html lang="en" className={`${sans.variable} ${mono.variable} ${display.variable}`}>
       <body>
+        {/* Hide page chrome until cabin window intro mounts (first home visit only) */}
+        <Script id="aw-intro-pending" strategy="beforeInteractive">
+          {`(function(){var de=document.documentElement;if(!de)return;try{var p=location.pathname;if((p==="/"||p==="")&&!sessionStorage.getItem("aw-intro-played")){de.classList.add("aw-intro-pending");setTimeout(function(){var el=document.documentElement;if(el)el.classList.remove("aw-intro-pending");},12000);}}catch(e){var el=document.documentElement;if(el)el.classList.remove("aw-intro-pending");}})();`}
+        </Script>
         <JsonLd />
         <LoadingProvider>
           <a href="#main" className="skip-link">

@@ -15,7 +15,7 @@ export const brand = {
 } as const;
 
 export const hero = {
-  eyebrow: "DGCA ground training · New Delhi NCR",
+  eyebrow: "DGCA ground training · Bengaluru",
   headline: "Train for your aviation career.",
   sub: "Structured ground school, DGCA exam preparation, and mentorship — with a clear path from your first class to the flight deck.",
   points: ["Ground school", "DGCA exam prep", "Career mentorship"],
@@ -136,7 +136,7 @@ export const platform = {
       code: "MOD-DGC",
       title: "DGCA Records",
       desc: "Examination history, batch records, and compliance-ready documentation.",
-      status: "active",
+      status: "roadmap",
       capabilities: ["Exam readiness tracking", "Batch records", "Progress reports"],
     },
     {

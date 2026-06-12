@@ -13,7 +13,7 @@ export default function AdminPortalLayout({ children }: { children: React.ReactN
       user={mockAdmin}
       variant="admin"
       statusLabel="Operations · UDA Admin"
-      statusCoords="28.6139° N, 77.2090° E"
+      statusCoords="12.9716° N, 77.5946° E"
     >
       {children}
     </PortalShell>

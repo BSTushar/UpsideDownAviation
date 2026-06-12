@@ -12,9 +12,11 @@
   if (window.WindowIntro) return;
 
   var CSS =
-    '.aw-intro{position:fixed;inset:0;z-index:2147483600;background:#05070a;overflow:hidden}' +
+    '.aw-intro{position:fixed;inset:0;z-index:2147483600;background:transparent;overflow:hidden}' +
     '.aw-intro__stage{position:absolute;inset:0;transform-origin:50% 47%;will-change:transform}' +
     '.aw-intro__cv{position:absolute;inset:0;width:100%;height:100%;display:block}' +
+    'html.aw-intro-active body{filter:blur(var(--aw-page-blur,0px));transform:scale(var(--aw-page-scale,1));' +
+    'transform-origin:50% 47%;will-change:filter,transform}' +
     '.aw-intro__skip{position:fixed;right:18px;bottom:16px;z-index:2147483601;border:0;cursor:pointer;' +
     'background:rgba(255,255,255,.12);color:#fff;font:500 12px/1 system-ui,-apple-system,sans-serif;' +
     'letter-spacing:.04em;padding:9px 14px;border-radius:999px;-webkit-backdrop-filter:blur(6px);' +
@@ -35,6 +37,11 @@
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     injectStyle();
 
+    function clearPending(){
+      var el = document.documentElement;
+      if (el) el.classList.remove('aw-intro-pending');
+    }
+
     var root = document.createElement('div'); root.className = 'aw-intro';
     var stage = document.createElement('div'); stage.className = 'aw-intro__stage';
     var cv = document.createElement('canvas'); cv.className = 'aw-intro__cv';
@@ -43,6 +50,7 @@
     stage.appendChild(cv); root.appendChild(stage);
     if (opts.skip !== false) root.appendChild(skip);
     (document.body || document.documentElement).appendChild(root);
+    clearPending();
     var ctx = cv.getContext('2d');
 
     /* ---------- value-noise / fbm ---------- */
@@ -84,6 +92,17 @@
     function shadeOffset(ms){return shadeProg(ms)*(Ht+frameT*2.2);}
     function flyZoom(ms){ if(ms<2400) return 1; return 1+Math.pow(clamp01((ms-2400)/750),2.2)*6; }
     function fadeOut(ms){ if(ms<2500) return 1; return 1-clamp01((ms-2500)/650); }
+    function siteReveal(ms){ return shadeProg(ms) > 0.78; }
+    function pageBlurPx(ms){
+      if(!siteReveal(ms)) return 0;
+      if(ms < 2400) return 18;
+      return 18 * (1 - easeInOut(clamp01((ms - 2400) / 750)));
+    }
+    function pageScale(ms){
+      if(!siteReveal(ms)) return 1;
+      var z = flyZoom(ms);
+      return 1 + (z - 1) * 0.12;
+    }
     var END = 3300;
 
     /* ---------- scene (clean sky — no clouds) ---------- */
@@ -116,30 +135,41 @@
       ctx.fillStyle='rgba(18,24,30,.55)';
       ctx.beginPath(); ctx.arc(cx, cy+Ht/2-frameT*.55, U*0.0065, 0, 7); ctx.fill();
     }
-    function draw(ms){
-      ctx.clearRect(0,0,W,H);
+    function drawCabin(ms){
+      var reveal = siteReveal(ms);
       var bg=ctx.createRadialGradient(cx,cy,U*0.1,cx,cy,U*0.8);
       bg.addColorStop(0,'#171c22'); bg.addColorStop(.55,'#0d1116'); bg.addColorStop(1,'#070a0d');
-      ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+      ctx.fillStyle=bg;
+      ctx.beginPath();
+      ctx.rect(0,0,W,H);
+      if(reveal) rrSub(ctx,cx-Wd/2,cy-Ht/2,Wd,Ht,R);
+      ctx.fill(reveal ? 'evenodd' : 'nonzero');
+    }
+    function draw(ms){
+      ctx.clearRect(0,0,W,H);
+      drawCabin(ms);
+
+      var reveal = siteReveal(ms);
+      var off=shadeOffset(ms);
 
       ctx.save(); aperture(ctx); ctx.clip();
-      var sky=ctx.createLinearGradient(0,cy-Ht/2,0,cy+Ht/2);
-      sky.addColorStop(0,'#2f6fb0'); sky.addColorStop(.45,'#6ba6d8');
-      sky.addColorStop(.8,'#bcdcf0'); sky.addColorStop(1,'#dcecf5');
-      ctx.fillStyle=sky; ctx.fillRect(cx-Wd/2,cy-Ht/2,Wd,Ht);
+      if(!reveal){
+        var sky=ctx.createLinearGradient(0,cy-Ht/2,0,cy+Ht/2);
+        sky.addColorStop(0,'#2f6fb0'); sky.addColorStop(.45,'#6ba6d8');
+        sky.addColorStop(.8,'#bcdcf0'); sky.addColorStop(1,'#dcecf5');
+        ctx.fillStyle=sky; ctx.fillRect(cx-Wd/2,cy-Ht/2,Wd,Ht);
 
-      var sx=cx+Wd*0.22, sy=cy-Ht*0.26;
-      var sun=ctx.createRadialGradient(sx,sy,0,sx,sy,Wd*0.7);
-      sun.addColorStop(0,'rgba(255,252,242,.6)'); sun.addColorStop(.2,'rgba(255,248,232,.32)');
-      sun.addColorStop(.55,'rgba(255,243,220,.08)'); sun.addColorStop(1,'rgba(255,243,220,0)');
-      ctx.globalCompositeOperation='screen'; ctx.fillStyle=sun;
-      ctx.fillRect(cx-Wd/2,cy-Ht/2,Wd,Ht); ctx.globalCompositeOperation='source-over';
+        var sx=cx+Wd*0.22, sy=cy-Ht*0.26;
+        var sun=ctx.createRadialGradient(sx,sy,0,sx,sy,Wd*0.7);
+        sun.addColorStop(0,'rgba(255,252,242,.6)'); sun.addColorStop(.2,'rgba(255,248,232,.32)');
+        sun.addColorStop(.55,'rgba(255,243,220,.08)'); sun.addColorStop(1,'rgba(255,243,220,0)');
+        ctx.globalCompositeOperation='screen'; ctx.fillStyle=sun;
+        ctx.fillRect(cx-Wd/2,cy-Ht/2,Wd,Ht); ctx.globalCompositeOperation='source-over';
 
-      var edge=ctx.createRadialGradient(cx,cy,Wd*0.18,cx,cy,Wd*0.62);
-      edge.addColorStop(0,'rgba(8,20,30,0)'); edge.addColorStop(1,'rgba(8,22,34,.5)');
-      ctx.fillStyle=edge; ctx.fillRect(cx-Wd/2,cy-Ht/2,Wd,Ht);
-
-      var off=shadeOffset(ms);
+        var edge=ctx.createRadialGradient(cx,cy,Wd*0.18,cx,cy,Wd*0.62);
+        edge.addColorStop(0,'rgba(8,20,30,0)'); edge.addColorStop(1,'rgba(8,22,34,.5)');
+        ctx.fillStyle=edge; ctx.fillRect(cx-Wd/2,cy-Ht/2,Wd,Ht);
+      }
       if(off < Ht+frameT*2){
         var vel=Math.abs(shadeOffset(ms)-shadeOffset(ms-16));
         var sy0=cy-Ht/2-off;
@@ -167,11 +197,14 @@
       ctx.save(); aperture(ctx); ctx.clip();
       ctx.globalCompositeOperation='screen';
       var gl=ctx.createLinearGradient(cx-Wd*0.5,cy-Ht*0.5,cx+Wd*0.2,cy+Ht*0.2);
-      gl.addColorStop(0,'rgba(255,255,255,.16)'); gl.addColorStop(.35,'rgba(255,255,255,.02)');
+      gl.addColorStop(0,'rgba(255,255,255,'+(reveal?'.10':'.16')+')');
+      gl.addColorStop(.35,'rgba(255,255,255,.02)');
       gl.addColorStop(1,'rgba(255,255,255,0)');
       ctx.fillStyle=gl; ctx.fillRect(cx-Wd/2,cy-Ht/2,Wd,Ht);
-      ctx.globalAlpha=.26; ctx.strokeStyle='rgba(255,255,255,.4)'; ctx.lineWidth=U*0.0028;
-      ctx.beginPath(); ctx.moveTo(cx-Wd*0.34,cy-Ht*0.34); ctx.lineTo(cx-Wd*0.05,cy+Ht*0.02); ctx.stroke();
+      if(!reveal){
+        ctx.globalAlpha=.26; ctx.strokeStyle='rgba(255,255,255,.4)'; ctx.lineWidth=U*0.0028;
+        ctx.beginPath(); ctx.moveTo(cx-Wd*0.34,cy-Ht*0.34); ctx.lineTo(cx-Wd*0.05,cy+Ht*0.02); ctx.stroke();
+      }
       ctx.globalAlpha=1; ctx.globalCompositeOperation='source-over';
       ctx.restore();
       ctx.restore();
@@ -193,7 +226,22 @@
       ctx.fillStyle=vg; ctx.fillRect(0,0,W,H);
     }
 
+    function syncPage(ms){
+      var el = document.documentElement;
+      if (!el) return;
+      el.classList.add('aw-intro-active');
+      el.style.setProperty('--aw-page-blur', pageBlurPx(ms) + 'px');
+      el.style.setProperty('--aw-page-scale', String(pageScale(ms)));
+    }
+    function resetPage(){
+      var el = document.documentElement;
+      if (!el) return;
+      el.classList.remove('aw-intro-active');
+      el.style.removeProperty('--aw-page-blur');
+      el.style.removeProperty('--aw-page-scale');
+    }
     function render(ms){
+      syncPage(ms);
       draw(ms);
       stage.style.transform='scale('+flyZoom(ms)+')';
       root.style.opacity=fadeOut(ms);
@@ -203,6 +251,8 @@
     var removed=false;
     function cleanup(){
       if(removed) return; removed=true;
+      clearPending();
+      resetPage();
       window.removeEventListener('resize', onResize);
       if(root.parentNode) root.parentNode.removeChild(root);
       if(typeof opts.onDone==='function') opts.onDone();
@@ -218,6 +268,7 @@
     }
 
     if(reduce){
+      syncPage(2750);
       render(2750);                                  // static open window, no motion
       setTimeout(function(){
         root.style.transition='opacity .6s'; root.style.opacity=0;
@@ -244,11 +295,14 @@
   window.WindowIntro = { play: play, version: '1.0.0' };
 
   /* ---------- auto-run from <script> tag ---------- */
-  var me = document.currentScript;
+  var me = document.currentScript || document.getElementById('window-intro');
   if (window.__AW_CAPTURE) return;                   // let test harness drive it
+  if (!me) return;                                   // only auto-run via <script src=…> tag
   if (me && me.dataset.auto === 'false') return;     // opt out: call WindowIntro.play() yourself
   var once = me && me.dataset.once;                  // "session" => play only once per tab session
   function run(){
+    var p = location.pathname;
+    if (p !== '/' && p !== '') return;
     if (once === 'session') {
       try { if (sessionStorage.getItem('aw-intro-played')) return;
             sessionStorage.setItem('aw-intro-played','1'); } catch(e){}

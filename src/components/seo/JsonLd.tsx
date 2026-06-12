@@ -12,7 +12,8 @@ export function JsonLd() {
     email: SITE.email,
     address: {
       "@type": "PostalAddress",
-      addressRegion: "Delhi NCR",
+      addressLocality: "Bengaluru",
+      addressRegion: "Karnataka",
       addressCountry: "IN",
     },
     sameAs: [SITE.socials.instagram, SITE.socials.threads],

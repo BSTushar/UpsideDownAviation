@@ -3,7 +3,12 @@ export const SITE = {
   tagline: "Train. Prepare. Fly.",
   url: "https://upsidedownaviation.com",
   email: "info@upsidedownaviation.com",
-  location: "New Delhi NCR, India",
+  location: "Bengaluru",
+  coordinates: {
+    lat: "12.97",
+    lon: "77.59",
+    heading: 198,
+  },
   /** Set when a real number is available; footer hides phone until then */
   phone: null as string | null,
   whatsapp: null as string | null,

@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { NAV_LINKS, SITE } from "@/lib/constants";
 import { BrandLogo } from "@/components/brand/BrandLogo";
 import { MobileNavTagline } from "@/components/layout/MobileNavTagline";
+import { LoadingLink } from "@/components/motion/LoadingLink";
 import { cn } from "@/lib/cn";
 
 export function Navigation() {
@@ -24,16 +25,16 @@ export function Navigation() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 z-50 transition-all duration-[900ms] ease-signature",
+        "fixed inset-x-0 z-50 transition-all duration-[1500ms] ease-signature",
         scrolled || open ? "top-3 px-4" : "top-0 px-0"
       )}
     >
       <motion.nav
         initial={{ opacity: 0, y: -16, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+        transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
         className={cn(
-          "mx-auto grid w-full grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 transition-all duration-[900ms] ease-signature lg:flex lg:justify-between lg:gap-4",
+          "mx-auto grid w-full grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 transition-all duration-[1500ms] ease-signature lg:flex lg:justify-between lg:gap-4",
           scrolled || open
             ? "max-w-[980px] rounded-[22px] border border-white bg-white px-3 py-2 shadow-[0_18px_60px_rgba(0,0,0,0.28)]"
             : "max-w-none rounded-none border-b border-white/10 bg-surface/96 px-4 py-3 sm:px-[max(2rem,calc((100vw-1040px)/2))] lg:py-3"
@@ -49,7 +50,7 @@ export function Navigation() {
             <BrandLogo size="sm" priority />
             <span
               className={cn(
-                "min-w-0 truncate font-inktrap text-body-sm font-semibold tracking-tight transition-colors duration-[900ms] ease-signature",
+                "min-w-0 truncate font-inktrap text-body-sm font-semibold tracking-tight transition-colors duration-[1500ms] ease-signature",
                 scrolled || open
                   ? "block max-w-[88px] text-[#07111F] sm:max-w-[130px] lg:inline lg:max-w-none"
                   : "hidden text-white sm:inline"
@@ -68,7 +69,7 @@ export function Navigation() {
                   href={l.href}
                   onClick={() => setActiveHref(l.href)}
                   className={cn(
-                    "whitespace-nowrap rounded-[14px] px-4 py-2 font-inktrap text-body-sm font-semibold transition-all duration-[900ms] ease-signature",
+                    "whitespace-nowrap rounded-[14px] px-4 py-2 font-inktrap text-body-sm font-semibold transition-all duration-[1500ms] ease-signature",
                     scrolled || open
                       ? "text-[#07111F] hover:bg-[#f9f4ea]"
                       : "text-white/90 hover:bg-white/10 hover:text-white",
@@ -82,21 +83,21 @@ export function Navigation() {
           </ul>
 
           <div className="flex shrink-0 items-center gap-2">
-            <Link
+            <LoadingLink
               href="/portal/login"
               className={cn(
-                "hidden whitespace-nowrap rounded-[16px] border px-4 py-2.5 font-inktrap text-body-sm font-semibold transition-all duration-[900ms] ease-signature hover:-translate-y-0.5 md:inline-flex",
+                "hidden whitespace-nowrap rounded-[16px] border px-4 py-2.5 font-inktrap text-body-sm font-semibold transition-all duration-[1500ms] ease-signature hover:-translate-y-0.5 md:inline-flex",
                 scrolled || open
                   ? "border-[#e8dfd0] text-[#07111F] hover:bg-[#f9f4ea]"
                   : "border-white/25 text-white hover:bg-white/10"
               )}
             >
               Student Portal
-            </Link>
+            </LoadingLink>
             <Link
               href="/enquire"
               className={cn(
-                "hidden whitespace-nowrap rounded-pill px-5 py-2.5 font-inktrap text-body-sm font-semibold transition-all duration-[900ms] ease-signature hover:-translate-y-0.5 md:inline-flex",
+                "hidden whitespace-nowrap rounded-pill px-5 py-2.5 font-inktrap text-body-sm font-semibold transition-all duration-[1500ms] ease-signature hover:-translate-y-0.5 md:inline-flex",
                 scrolled || open
                   ? "bg-[#07111F] text-white hover:bg-[#0E1C2F]"
                   : "bg-accent text-[#07111F] hover:bg-[#e8d5b0]"
@@ -107,7 +108,7 @@ export function Navigation() {
             <button
               type="button"
               className={cn(
-                "flex h-10 w-10 items-center justify-center rounded-[14px] border transition-colors duration-[900ms] ease-signature lg:hidden",
+                "flex h-10 w-10 items-center justify-center rounded-[14px] border transition-colors duration-[1500ms] ease-signature lg:hidden",
                 scrolled || open
                   ? "border-[#e8dfd0] text-[#07111F] hover:bg-[#f9f4ea]"
                   : "border-white/25 text-white hover:bg-white/10"
@@ -148,13 +149,13 @@ export function Navigation() {
                 </motion.li>
               ))}
               <li className="flex flex-col gap-2 pt-6">
-                <Link
+                <LoadingLink
                   href="/portal/login"
                   onClick={() => setOpen(false)}
                   className="flex w-full justify-center rounded-[16px] border border-[#e8dfd0] px-5 py-3 font-inktrap text-body-sm font-semibold text-[#07111F]"
                 >
                   Student Portal
-                </Link>
+                </LoadingLink>
                 <Link
                   href="/enquire"
                   onClick={() => setOpen(false)}

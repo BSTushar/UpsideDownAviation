@@ -14,9 +14,9 @@ function latLon(lat: number, lon: number): [number, number, number] {
   return [Math.cos(a) * Math.cos(b), Math.sin(a), Math.cos(a) * Math.sin(b)];
 }
 
-// Delhi first — every route starts at home base
+// Bengaluru first — every route starts at home base
 const HUBS: [number, number, number][] = [
-  latLon(28.6, 77.2), // Delhi
+  latLon(12.97, 77.59), // Bengaluru
   latLon(25.2, 55.3), // Dubai
   latLon(51.5, -0.1), // London
   latLon(1.3, 103.8), // Singapore
@@ -200,7 +200,7 @@ export function GlobeSection() {
           />
           <p className="mt-5 type-body text-slate">
             A DGCA licence earned in India is the foundation of a global flying
-            career. Our students train in New Delhi NCR and build toward
+            career. Our students train in Bengaluru and build toward
             airline opportunities across the world.
           </p>
         </div>

@@ -9,6 +9,10 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
+    "start:e2e": "next start -p 3456",
+    "pretest:stress": "npm run build",
+    "test:e2e": "playwright test",
+    "test:stress": "playwright test e2e/stress.spec.ts",
     "docker:build": "docker compose build web",
     "docker:up": "docker compose up web",
     "docker:dev": "docker compose --profile dev up web-dev"
@@ -23,6 +27,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@playwright/test": "^1.51.1",
     "@types/node": "^22.9.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",

@@ -5,12 +5,12 @@ import { SITE } from "@/lib/constants";
 import { cn } from "@/lib/cn";
 
 const SECTION_COORDS: Record<string, string> = {
-  welcome: "28.6139° N, 77.2090° E",
-  why: "28.5562° N, 77.1000° E",
-  journey: "28.4595° N, 77.0266° E",
-  programs: "28.3949° N, 76.9754° E",
-  vision: "28.3200° N, 76.8900° E",
-  contact: "28.2500° N, 76.8000° E",
+  welcome: "12.9716° N, 77.5946° E",
+  why: "12.9500° N, 77.5800° E",
+  journey: "12.9300° N, 77.5600° E",
+  programs: "12.9100° N, 77.5400° E",
+  vision: "12.8900° N, 77.5200° E",
+  contact: "12.8700° N, 77.5000° E",
 };
 
 type Props = {
