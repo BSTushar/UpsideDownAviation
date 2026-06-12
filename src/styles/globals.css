@@ -18,7 +18,7 @@
     position: fixed;
     inset: 0;
     z-index: 2147483599;
-    background: #070a0d;
+    background: #07111f;
     pointer-events: none;
   }
 
@@ -26,9 +26,8 @@
     overflow: hidden;
   }
 
-  /* Cabin intro mounts on <html> — stays sharp while body blurs underneath */
-  .aw-intro {
-    filter: none !important;
+  html.aw-intro-active body {
+    overflow: hidden;
   }
 
   body {

@@ -265,7 +265,9 @@ test.describe("Window intro safety", () => {
     const stats = await page.evaluate(() => {
       const intro = document.querySelector(".aw-intro");
       const cv = document.querySelector(".aw-intro__cv") as HTMLCanvasElement | null;
-      if (!intro || !cv) return { ok: false, reason: "missing overlay" };
+      const blurLayer = document.querySelector(".aw-intro__page-blur");
+      const bodyStyle = getComputedStyle(document.body);
+      if (!intro || !cv || !blurLayer) return { ok: false, reason: "missing overlay layers" };
       if (intro.parentElement?.tagName !== "HTML") return { ok: false, reason: "wrong mount" };
       const ctx = cv.getContext("2d");
       if (!ctx) return { ok: false, reason: "no ctx" };
@@ -273,7 +275,13 @@ test.describe("Window intro safety", () => {
       let bright = 0;
       for (let i = 0; i < d.length; i += 4) if (d[i] + d[i + 1] + d[i + 2] > 80) bright++;
       const pct = bright / (cv.width * cv.height);
-      return { ok: pct > 0.05, pct, parent: intro.parentElement?.tagName };
+      return {
+        ok: pct > 0.02 && bodyStyle.transform === "none" && bodyStyle.filter === "none",
+        pct,
+        bodyTransform: bodyStyle.transform,
+        bodyFilter: bodyStyle.filter,
+        blurVisible: getComputedStyle(blurLayer).opacity !== "0",
+      };
     });
     expect(stats.ok, JSON.stringify(stats)).toBe(true);
   });
