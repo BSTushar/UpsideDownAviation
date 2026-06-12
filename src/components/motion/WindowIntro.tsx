@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Script from "next/script";
 
 declare global {
@@ -9,7 +10,9 @@ declare global {
 }
 
 function startIntro() {
-  if (!window.WindowIntro) return;
+  if (typeof window === "undefined" || !window.WindowIntro) return;
+  const path = window.location.pathname;
+  if (path !== "/" && path !== "") return;
   try {
     if (sessionStorage.getItem("aw-intro-played")) return;
     sessionStorage.setItem("aw-intro-played", "1");
@@ -21,6 +24,13 @@ function startIntro() {
 
 /** Landing-page cabin window intro. Plays once per session. */
 export function WindowIntro() {
+  useEffect(() => {
+    const onReady = () => startIntro();
+    if (window.WindowIntro) startIntro();
+    window.addEventListener("aw-intro-ready", onReady);
+    return () => window.removeEventListener("aw-intro-ready", onReady);
+  }, []);
+
   return (
     <Script
       id="window-intro"
@@ -28,7 +38,7 @@ export function WindowIntro() {
       strategy="afterInteractive"
       data-once="session"
       data-auto="false"
-      onLoad={startIntro}
+      onReady={startIntro}
     />
   );
 }

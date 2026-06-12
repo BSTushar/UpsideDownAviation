@@ -297,9 +297,18 @@
   /* ---------- auto-run from <script> tag ---------- */
   var me = document.currentScript || document.getElementById('window-intro');
   if (window.__AW_CAPTURE) return;                   // let test harness drive it
-  if (!me) return;                                   // only auto-run via <script src=…> tag
-  if (me && me.dataset.auto === 'false') return;     // opt out: call WindowIntro.play() yourself
-  var once = me && me.dataset.once;                  // "session" => play only once per tab session
+
+  function signalReady() {
+    try { window.dispatchEvent(new CustomEvent('aw-intro-ready')); } catch (e) {}
+  }
+
+  /* Next.js / async loaders: React listens for aw-intro-ready */
+  if (!me || (me && me.dataset.auto === 'false')) {
+    signalReady();
+    return;
+  }
+
+  var once = me.dataset.once;                  // "session" => play only once per tab session
   function run(){
     var p = location.pathname;
     if (p !== '/' && p !== '') return;
@@ -307,7 +316,7 @@
       try { if (sessionStorage.getItem('aw-intro-played')) return;
             sessionStorage.setItem('aw-intro-played','1'); } catch(e){}
     }
-    play({ skip: !(me && me.dataset.skip === 'false') });
+    play({ skip: !(me.dataset.skip === 'false') });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
   else run();
