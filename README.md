@@ -2,6 +2,7 @@
 
 Marketing site + student portal demo for **Upside Down Aviation** — DGCA ground training, career mentorship, New Delhi NCR.
 
+- **Live site:** https://avac-pied.vercel.app  
 - **Repo:** https://github.com/BSTushar/UpsideDownAviation  
 - **Maintainer:** BSTushar · tusharsbapu@gmail.com  
 - **Full handoff (read first):** [HANDOFF.md](./HANDOFF.md)

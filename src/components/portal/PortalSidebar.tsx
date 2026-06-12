@@ -27,6 +27,7 @@ export function PortalSidebar({ nav, open, onClose, footer }: Props) {
         aria-hidden
       />
       <aside
+        data-tour="tour-sidebar"
         className={cn(
           "fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-graphite bg-void transition-transform duration-reveal ease-signature md:static md:translate-x-0",
           open ? "translate-x-0" : "-translate-x-full"

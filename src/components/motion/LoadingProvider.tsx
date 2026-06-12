@@ -6,6 +6,8 @@ import { OpeningStory } from "@/components/welcome/OpeningStory";
 type LoadingContextValue = {
   startLoading: () => void;
   stopLoading: () => void;
+  /** True while the opening loader animation is visible */
+  isLoading: boolean;
 };
 
 const LoadingContext = createContext<LoadingContextValue | null>(null);
@@ -42,8 +44,8 @@ export function LoadingProvider({ children }: { children: ReactNode }) {
   const stopLoading = useCallback(() => setSubmitLoad(false), []);
 
   const value = useMemo(
-    () => ({ startLoading, stopLoading }),
-    [startLoading, stopLoading]
+    () => ({ startLoading, stopLoading, isLoading: active }),
+    [startLoading, stopLoading, active]
   );
 
   return (

@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { PortalTopBar } from "./PortalTopBar";
 import { PortalSidebar } from "./PortalSidebar";
 import { PortalStatusBar } from "./PortalStatusBar";
+import { SIDEBAR_TOUR_TARGETS } from "@/lib/portal/tour-steps";
 import type { NavItem, PortalUser } from "@/lib/portal/types";
 
 type Props = {
@@ -26,6 +27,20 @@ export function PortalShell({
   statusCoords,
 }: Props) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    const open = () => setSidebarOpen(true);
+    const onStep = (e: Event) => {
+      const target = (e as CustomEvent<string>).detail;
+      if (target && SIDEBAR_TOUR_TARGETS.has(target)) setSidebarOpen(true);
+    };
+    window.addEventListener("uda-tour-open-sidebar", open);
+    window.addEventListener("uda-tour-step", onStep);
+    return () => {
+      window.removeEventListener("uda-tour-open-sidebar", open);
+      window.removeEventListener("uda-tour-step", onStep);
+    };
+  }, []);
 
   return (
     <div className="flex min-h-screen flex-col bg-void text-bone-white">

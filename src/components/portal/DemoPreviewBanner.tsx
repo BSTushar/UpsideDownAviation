@@ -3,11 +3,13 @@
 import { useRouter } from "next/navigation";
 import { usePreview } from "@/components/portal/PreviewProvider";
 import { clearPreviewSession } from "@/lib/portal/preview";
+import { useLoading } from "@/components/motion/LoadingProvider";
 
 /** Slim bar shown while the portal is being viewed in preview mode with sample data. */
 export function DemoPreviewBanner() {
   const router = useRouter();
   const { isPreview, visitorName } = usePreview();
+  const { startLoading } = useLoading();
 
   if (!isPreview) return null;
 
@@ -15,6 +17,7 @@ export function DemoPreviewBanner() {
 
   const exit = () => {
     clearPreviewSession();
+    startLoading();
     router.push("/portal/login");
   };
 

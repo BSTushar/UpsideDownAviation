@@ -6,7 +6,7 @@ export type ButtonVariant = "ghost" | "filled" | "accent" | "icon" | "primary" |
 export type ButtonSize = "sm" | "md" | "lg";
 
 const base =
-  "inline-flex items-center justify-center gap-2 font-inktrap font-medium transition-all duration-standard ease-signature focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-void disabled:opacity-50 disabled:pointer-events-none active:scale-[0.98]";
+  "relative z-[1] inline-flex items-center justify-center gap-2 font-inktrap font-medium transition-all duration-standard ease-signature focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-void disabled:opacity-50 disabled:pointer-events-none active:scale-[0.98]";
 
 const variants: Record<ButtonVariant, string> = {
   ghost:
@@ -18,7 +18,7 @@ const variants: Record<ButtonVariant, string> = {
   icon:
     "rounded-icon border border-storm-gray bg-transparent p-2 text-bone-white hover:border-iris hover:shadow-iris-glow",
   primary:
-    "rounded-pill border border-accent bg-accent px-6 py-3 text-body font-semibold text-void hover:bg-accent/90 hover:shadow-accent-glow",
+    "rounded-pill border-0 bg-accent px-6 py-3 text-body font-semibold text-void hover:bg-[#e8d5b0] hover:shadow-accent-glow",
   secondary:
     "rounded-pill border border-storm-gray bg-transparent px-6 py-3 text-body text-bone-white hover:border-iris hover:shadow-iris-glow",
 };
@@ -37,6 +37,22 @@ type Props = {
   fullWidth?: boolean;
 } & ({ href: string } & Partial<ComponentProps<typeof Link>> | ComponentProps<"button">);
 
+function GoldRing({
+  children,
+  fullWidth,
+  className,
+}: {
+  children: ReactNode;
+  fullWidth?: boolean;
+  className?: string;
+}) {
+  return (
+    <span className={cn("gold-ring inline-flex rounded-pill", fullWidth && "w-full", className)}>
+      {children}
+    </span>
+  );
+}
+
 export function Button({
   variant = "ghost",
   size = "md",
@@ -53,16 +69,26 @@ export function Button({
     className
   );
 
-  if ("href" in props && props.href) {
-    return (
+  const useGoldRing = variant === "primary";
+
+  const inner =
+    "href" in props && props.href ? (
       <Link className={classes} {...(props as ComponentProps<typeof Link>)}>
         {children}
       </Link>
+    ) : (
+      <button className={classes} type="button" {...(props as ComponentProps<"button">)}>
+        {children}
+      </button>
+    );
+
+  if (useGoldRing) {
+    return (
+      <GoldRing fullWidth={fullWidth} className={className}>
+        {inner}
+      </GoldRing>
     );
   }
-  return (
-    <button className={classes} type="button" {...(props as ComponentProps<"button">)}>
-      {children}
-    </button>
-  );
+
+  return inner;
 }

@@ -6,7 +6,7 @@ import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NAV_LINKS, SITE } from "@/lib/constants";
 import { BrandLogo } from "@/components/brand/BrandLogo";
-import { MobileNavTicker } from "@/components/layout/MobileNavTicker";
+import { MobileNavTagline } from "@/components/layout/MobileNavTagline";
 import { cn } from "@/lib/cn";
 
 export function Navigation() {
@@ -33,33 +33,35 @@ export function Navigation() {
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
         className={cn(
-          "mx-auto flex w-full items-center transition-all duration-[900ms] ease-signature lg:justify-between",
+          "mx-auto grid w-full grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 transition-all duration-[900ms] ease-signature lg:flex lg:justify-between lg:gap-4",
           scrolled || open
-            ? "max-w-[980px] gap-2 rounded-[22px] border border-white bg-white px-3 py-2 shadow-[0_18px_60px_rgba(0,0,0,0.28)]"
-            : "max-w-none justify-between gap-4 rounded-none border-b border-white/10 bg-surface/96 px-[max(2rem,calc((100vw-1040px)/2))] py-3 shadow-none"
+            ? "max-w-[980px] rounded-[22px] border border-white bg-white px-3 py-2 shadow-[0_18px_60px_rgba(0,0,0,0.28)]"
+            : "max-w-none rounded-none border-b border-white/10 bg-surface/96 px-4 py-3 sm:px-[max(2rem,calc((100vw-1040px)/2))] lg:py-3"
         )}
       >
           <Link
             href="/"
             className={cn(
-              "flex shrink-0 items-center gap-2 rounded-[16px] px-2 py-1.5 transition-colors sm:gap-3",
+              "flex min-w-0 items-center gap-2 rounded-[16px] px-1 py-1.5 transition-colors sm:gap-3 sm:px-2",
               scrolled || open ? "hover:bg-[#f9f4ea]" : "hover:bg-white/10"
             )}
           >
             <BrandLogo size="sm" priority />
             <span
               className={cn(
-                "max-w-[108px] truncate whitespace-nowrap font-inktrap text-body-sm font-semibold tracking-tight transition-colors duration-[900ms] ease-signature sm:max-w-none",
-                scrolled || open ? "text-[#07111F] lg:inline" : "hidden text-white sm:inline"
+                "min-w-0 truncate font-inktrap text-body-sm font-semibold tracking-tight transition-colors duration-[900ms] ease-signature",
+                scrolled || open
+                  ? "block max-w-[88px] text-[#07111F] sm:max-w-[130px] lg:inline lg:max-w-none"
+                  : "hidden text-white sm:inline"
               )}
             >
               {SITE.name}
             </span>
           </Link>
 
-          <MobileNavTicker variant={scrolled || open ? "light" : "dark"} />
+          <MobileNavTagline variant={scrolled || open ? "light" : "dark"} />
 
-          <ul className="hidden items-center gap-1 lg:flex">
+          <ul className="hidden items-center gap-1 lg:flex lg:flex-1 lg:justify-center">
             {NAV_LINKS.map((l) => (
               <li key={l.href}>
                 <Link
@@ -94,13 +96,20 @@ export function Navigation() {
             <Link
               href="/enquire"
               className={cn(
-                "hidden whitespace-nowrap rounded-[16px] px-5 py-2.5 font-inktrap text-body-sm font-semibold transition-all duration-[900ms] ease-signature hover:-translate-y-0.5 md:inline-flex",
-                scrolled || open
-                  ? "bg-[#07111F] text-white hover:bg-[#0E1C2F] hover:shadow-[0_10px_28px_rgba(7,17,31,0.25)]"
-                  : "bg-accent text-[#07111F] hover:bg-[#e8d5b0]"
+                "gold-ring hidden whitespace-nowrap rounded-pill md:inline-flex",
+                scrolled || open ? "" : ""
               )}
             >
-              Speak to an Advisor
+              <span
+                className={cn(
+                  "relative z-[1] inline-flex rounded-pill px-5 py-2.5 font-inktrap text-body-sm font-semibold transition-all duration-[900ms] ease-signature hover:-translate-y-0.5",
+                  scrolled || open
+                    ? "bg-[#07111F] text-white hover:bg-[#0E1C2F]"
+                    : "bg-accent text-[#07111F] hover:bg-[#e8d5b0]"
+                )}
+              >
+                Speak to an Advisor
+              </span>
             </Link>
             <button
               type="button"
@@ -156,9 +165,11 @@ export function Navigation() {
                 <Link
                   href="/enquire"
                   onClick={() => setOpen(false)}
-                  className="flex w-full justify-center rounded-[16px] bg-[#07111F] px-5 py-3 font-inktrap text-body-sm font-semibold text-white"
+                  className="gold-ring flex w-full rounded-pill"
                 >
-                  Speak to an Advisor
+                  <span className="relative z-[1] flex w-full justify-center rounded-pill bg-[#07111F] px-5 py-3 font-inktrap text-body-sm font-semibold text-white">
+                    Speak to an Advisor
+                  </span>
                 </Link>
               </li>
             </ul>

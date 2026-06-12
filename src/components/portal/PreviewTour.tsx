@@ -3,8 +3,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/Button";
+import { useLoading } from "@/components/motion/LoadingProvider";
 import { usePreview } from "@/components/portal/PreviewProvider";
-import { buildSpotlightSteps } from "@/lib/portal/tour-steps";
+import { buildSpotlightSteps, SIDEBAR_TOUR_TARGETS } from "@/lib/portal/tour-steps";
+
+const TOUR_START_DELAY_MS = 450;
 
 const PAD = 10;
 const TOOLTIP_W = 340;
@@ -56,6 +59,8 @@ function computeTooltip(rect: DOMRect): TooltipPos {
 
 export function PreviewTour() {
   const { showTour, visitorName, skipTour, finishTour } = usePreview();
+  const { isLoading } = useLoading();
+  const [tourVisible, setTourVisible] = useState(false);
   const [step, setStep] = useState(0);
   const [rect, setRect] = useState<DOMRect | null>(null);
   const [tooltip, setTooltip] = useState<TooltipPos | null>(null);
@@ -64,6 +69,28 @@ export function PreviewTour() {
   const current = steps[step];
   const isLast = step === steps.length - 1;
   const hasTarget = current?.target != null;
+  const hasHighlight = hasTarget && rect != null && rect.width > 0 && rect.height > 0;
+
+  /* Wait for loading animation to finish before starting tour */
+  useEffect(() => {
+    if (!showTour || isLoading) {
+      setTourVisible(false);
+      return;
+    }
+    const t = window.setTimeout(() => {
+      setStep(0);
+      setTourVisible(true);
+    }, TOUR_START_DELAY_MS);
+    return () => window.clearTimeout(t);
+  }, [showTour, isLoading]);
+
+  /* Open mobile sidebar when tour highlights nav items */
+  useEffect(() => {
+    if (!tourVisible || !current?.target) return;
+    if (SIDEBAR_TOUR_TARGETS.has(current.target)) {
+      window.dispatchEvent(new CustomEvent("uda-tour-step", { detail: current.target }));
+    }
+  }, [tourVisible, step, current?.target]);
 
   const refresh = useCallback(() => {
     if (!current) return;
@@ -73,31 +100,32 @@ export function PreviewTour() {
   }, [current]);
 
   useEffect(() => {
-    if (!showTour || !current) return;
+    if (!tourVisible || !current) return;
 
     if (current.target) {
       const el = findTargetElement(current.target);
       el?.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
-      const t = window.setTimeout(refresh, 400);
+      const delay = SIDEBAR_TOUR_TARGETS.has(current.target) ? 550 : 400;
+      const t = window.setTimeout(refresh, delay);
       refresh();
       return () => window.clearTimeout(t);
     }
 
     setRect(null);
     setTooltip(null);
-  }, [showTour, step, current, refresh]);
+  }, [tourVisible, step, current, refresh]);
 
   useEffect(() => {
-    if (!showTour) return;
+    if (!tourVisible) return;
     window.addEventListener("resize", refresh);
     window.addEventListener("scroll", refresh, true);
     return () => {
       window.removeEventListener("resize", refresh);
       window.removeEventListener("scroll", refresh, true);
     };
-  }, [showTour, refresh]);
+  }, [tourVisible, refresh]);
 
-  if (!showTour || !visitorName || !current) return null;
+  if (!tourVisible || !visitorName || !current) return null;
 
   const next = () => {
     if (isLast) finishTour();
@@ -115,15 +143,15 @@ export function PreviewTour() {
 
   return (
     <div className="fixed inset-0 z-[260]">
-      {!hasTarget && (
+      {!hasHighlight && (
         <div className="fixed inset-0 z-[261] bg-void/82" aria-hidden />
       )}
 
       <AnimatePresence mode="wait">
-        {hasTarget && rect && (
+        {hasHighlight && rect && (
           <motion.div
             key={`spot-${current.target}`}
-            className="pointer-events-none fixed z-[261] rounded-xl ring-2 ring-accent animate-[pulse_2s_ease-in-out_infinite]"
+            className="pointer-events-none fixed z-[261] rounded-xl ring-2 ring-accent"
             style={{
               ...highlightStyle,
               boxShadow: "0 0 0 9999px rgba(7, 17, 31, 0.82)",
@@ -144,7 +172,7 @@ export function PreviewTour() {
           aria-labelledby="spotlight-tour-title"
           className="fixed z-[262] rounded-card border border-accent/40 bg-surface p-5 shadow-[0_20px_60px_rgba(0,0,0,0.55)]"
           style={
-            hasTarget && tooltip
+            hasHighlight && tooltip
               ? { top: tooltip.top, left: tooltip.left, width: TOOLTIP_W }
               : {
                   top: "50%",
