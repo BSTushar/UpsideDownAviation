@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CommandPanel } from "@/components/portal/CommandPanel";
+import { PortalLoginTeaser } from "@/components/portal/PortalLoginTeaser";
 import { PreviewNameGate } from "@/components/portal/PreviewNameGate";
 import { Button } from "@/components/ui/Button";
 import { SITE } from "@/lib/constants";
@@ -56,15 +57,18 @@ export default function PortalLoginPage() {
           <p className="type-body-sm text-slate">For enrolled students only</p>
         </div>
 
-        <CommandPanel>
+        <PortalLoginTeaser />
+
+        <CommandPanel className="mt-6">
           <p className="type-body text-slate">
-            Access your schedule, progress, announcements, and mentorship — all in one place.
+            Schedule, attendance, announcements, progress, and mentorship — one command center for enrolled students.
           </p>
-          <Button variant="primary" fullWidth className="mt-6" disabled>
-            Student login coming soon
+
+          <Button variant="primary" fullWidth className="mt-6" onClick={() => setShowNameGate(true)}>
+            View the experience
           </Button>
-          <p className="mt-4 text-center type-caption text-slate normal-case tracking-normal">
-            Google sign-in and live student access are being connected. Enrolled students can contact their advisor for access updates.
+          <p className="mt-3 text-center type-caption text-slate normal-case tracking-normal">
+            Enter your first name for a personalised walkthrough with sample student data.
           </p>
 
           <div className="my-6 flex items-center gap-3" aria-hidden>
@@ -73,14 +77,12 @@ export default function PortalLoginPage() {
             <span className="h-px flex-1 bg-graphite" />
           </div>
 
-          <Button variant="ghost" fullWidth onClick={() => setShowNameGate(true)}>
-            View the experience
+          <Button variant="ghost" fullWidth disabled>
+            Student login — opening soon
           </Button>
           <p className="mt-3 text-center type-caption text-slate normal-case tracking-normal">
-            Enter your name for a personalised walkthrough with sample student data.
-          </p>
-          <p className="mt-6 text-center">
-            <Link href={`mailto:${SITE.email}`} className="type-body-sm text-accent hover:underline">
+            Enrolled students: contact your advisor at{" "}
+            <Link href={`mailto:${SITE.email}`} className="text-accent hover:underline">
               {SITE.email}
             </Link>
           </p>
@@ -94,10 +96,7 @@ export default function PortalLoginPage() {
       </div>
 
       {showNameGate && (
-        <PreviewNameGate
-          onSubmit={enterPreview}
-          onCancel={() => setShowNameGate(false)}
-        />
+        <PreviewNameGate onSubmit={enterPreview} onCancel={() => setShowNameGate(false)} />
       )}
     </div>
   );

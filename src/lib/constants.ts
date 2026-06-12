@@ -13,7 +13,7 @@ export const SITE = {
   phone: null as string | null,
   whatsapp: null as string | null,
   socials: {
-    instagram: "https://instagram.com/upsidedown_aviation",
+    instagram: "https://www.instagram.com/upsidedown_aviation/",
     threads: "https://threads.net/@upsidedown_aviation",
   },
 } as const;

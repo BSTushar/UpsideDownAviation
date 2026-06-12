@@ -27,6 +27,7 @@ export function StudentJourney() {
                 <span className="type-caption text-accent">Stage {String(index + 1).padStart(2, "0")}</span>
                 <h3 className="mt-8 type-subheading text-bone-white">{stage.title}</h3>
                 <p className="mt-3 type-body-sm text-bone-white/75">{stage.desc}</p>
+                <p className="mt-2 type-caption text-accent/90 normal-case tracking-normal">{stage.detail}</p>
               </article>
             </StaggerItem>
           ))}

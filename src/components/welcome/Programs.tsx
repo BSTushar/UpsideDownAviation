@@ -10,16 +10,16 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger, StaggerItem } from "@/components/motion/Stagger";
 
+function enquireHref(interest: string) {
+  return `/enquire?interest=${encodeURIComponent(interest)}`;
+}
+
 export function Programs() {
   return (
     <section id="programs" className="scroll-mt-24 bg-surface py-section">
       <div className="section-container">
         <Reveal className="mb-16">
-          <SectionHeader
-            eyebrow={programs.eyebrow}
-            headline={programs.headline}
-            sub={programs.sub}
-          />
+          <SectionHeader eyebrow={programs.eyebrow} headline={programs.headline} sub={programs.sub} />
         </Reveal>
 
         <Stagger className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -31,7 +31,7 @@ export function Programs() {
                 <Card
                   variant="default"
                   className={cn(
-                    "interactive-surface group relative flex min-h-[300px] flex-col justify-between overflow-hidden bg-[#081827] shadow-[0_20px_60px_rgba(0,0,0,0.18)]",
+                    "interactive-surface group relative flex min-h-[340px] flex-col justify-between overflow-hidden bg-[#081827] shadow-[0_20px_60px_rgba(0,0,0,0.18)]",
                     card.comingSoon && "border-dashed"
                   )}
                   as="article"
@@ -45,18 +45,20 @@ export function Programs() {
                     <Icon className="mb-4 h-7 w-7 text-accent transition-transform duration-standard group-hover:-translate-y-1 group-hover:scale-110" strokeWidth={1.5} />
                     <CardTitle>{card.title}</CardTitle>
                     <CardDescription className="mt-3 text-bone-white/75">{card.desc}</CardDescription>
+                    <p className="mt-3 type-body-sm text-accent/90">{card.outcome}</p>
+                    <p className="mt-1 type-caption text-slate normal-case tracking-normal">{card.audience}</p>
                     {!card.comingSoon && (
                       <Link
-                        href="/enquire"
+                        href={enquireHref(card.interest)}
                         className="mt-5 inline-flex items-center gap-2 type-body-sm font-semibold text-accent"
                       >
-                        Enquire
+                        {card.cta}
                         <ArrowRight className="h-4 w-4 transition-transform duration-standard group-hover:translate-x-1" strokeWidth={1.5} />
                       </Link>
                     )}
                     {card.comingSoon && (
                       <div className="mt-5 inline-flex items-center rounded-pill border border-graphite px-4 py-2 type-body-sm font-semibold text-bone-white/70">
-                        Launching with our flying school
+                        {card.cta}
                       </div>
                     )}
                   </div>

@@ -32,14 +32,14 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: { default: `${SITE.name} — ${SITE.tagline}`, template: `%s | ${SITE.name}` },
   description:
-    "Aviation operations platform — ground training, DGCA records, flight-hour tracking, career services, and flying-school operations under one standard.",
+    "DGCA ground training, exam preparation, and career mentorship in Bengaluru — one structured path from ground school to the flight deck.",
   keywords: [
     "aviation training",
     "pilot training India",
     "DGCA ground classes",
-    "aviation ERP",
-    "flight hour tracking",
-    "flying school operations",
+    "pilot training Bengaluru",
+    "aviation mentorship",
+    "flying school India",
   ],
   openGraph: {
     type: "website",

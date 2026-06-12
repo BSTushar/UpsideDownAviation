@@ -12,10 +12,7 @@ export function WhyAviation() {
 
       <div className="section-container relative">
         <Reveal className="mx-auto max-w-3xl">
-          <SectionHeader
-            eyebrow={mission.eyebrow}
-            headline={mission.headline}
-          />
+          <SectionHeader eyebrow={mission.eyebrow} headline={mission.headline} />
         </Reveal>
 
         <Stagger className="mx-auto mt-10 flex max-w-3xl flex-col gap-6">
@@ -25,6 +22,13 @@ export function WhyAviation() {
             </StaggerItem>
           ))}
         </Stagger>
+
+        <Reveal className="mx-auto mt-10 max-w-3xl">
+          <div className="rounded-card border border-accent/25 bg-surface/70 p-6">
+            <p className="type-body-sm font-semibold text-accent">{mission.parentsCallout.title}</p>
+            <p className="mt-2 type-body-sm text-slate">{mission.parentsCallout.body}</p>
+          </div>
+        </Reveal>
 
         <Stagger className="mx-auto mt-12 grid max-w-3xl gap-4 sm:grid-cols-3">
           {mission.points.map((point) => (

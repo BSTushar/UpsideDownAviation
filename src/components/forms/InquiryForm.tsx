@@ -15,7 +15,17 @@ const interests = [
   "General",
 ] as const;
 
-export function InquiryForm() {
+type Interest = (typeof interests)[number];
+
+function isValidInterest(value: string | undefined): value is Interest {
+  return !!value && (interests as readonly string[]).includes(value);
+}
+
+type Props = {
+  defaultInterest?: string;
+};
+
+export function InquiryForm({ defaultInterest }: Props) {
   const { startLoading } = useLoading();
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -24,6 +34,7 @@ export function InquiryForm() {
   const emailId = useId();
   const interestId = useId();
   const messageId = useId();
+  const initialInterest = isValidInterest(defaultInterest) ? defaultInterest : "General";
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -82,7 +93,7 @@ export function InquiryForm() {
         <Input id={emailId} name="email" type="email" autoComplete="email" aria-invalid={!!errors.email} />
       </FormField>
       <FormField label="Area of interest" htmlFor={interestId}>
-        <Select id={interestId} name="interest" defaultValue="General">
+        <Select id={interestId} name="interest" defaultValue={initialInterest}>
           {interests.map((i) => (
             <option key={i} value={i}>{i}</option>
           ))}

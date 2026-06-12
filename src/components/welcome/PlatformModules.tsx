@@ -1,14 +1,21 @@
 "use client";
 
-import { Plane, Clock, FileText, Briefcase, LayoutGrid } from "lucide-react";
+import { Briefcase, Clock, FileText, LayoutGrid, Plane } from "lucide-react";
 import { platform } from "@/content/sections";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Badge } from "@/components/ui/Badge";
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger, StaggerItem } from "@/components/motion/Stagger";
 import { cn } from "@/lib/cn";
+import type { LucideIcon } from "lucide-react";
 
-const icons = [Plane, Clock, FileText, Briefcase, LayoutGrid] as const;
+const MODULE_ICONS: Record<string, LucideIcon> = {
+  "career-services": Briefcase,
+  "aviation-erp": LayoutGrid,
+  "flying-school": Plane,
+  "flight-hours": Clock,
+  "dgca-records": FileText,
+};
 
 export function PlatformModules() {
   return (
@@ -26,8 +33,8 @@ export function PlatformModules() {
         </Reveal>
 
         <Stagger className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {platform.modules.map((mod, i) => {
-            const Icon = icons[i % icons.length];
+          {platform.modules.map((mod) => {
+            const Icon = MODULE_ICONS[mod.id] ?? LayoutGrid;
             return (
               <StaggerItem key={mod.id}>
                 <article

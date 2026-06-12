@@ -44,6 +44,14 @@ export function WelcomeScreen() {
           >
             {hero.eyebrow}
           </motion.p>
+          <motion.p
+            className="mt-2 type-body-sm font-medium text-bone-white/88"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: DURATION.slow, delay: 0.26, ease: EASE }}
+          >
+            {hero.brandLine}
+          </motion.p>
           <motion.h1
             className="mt-4 type-display text-bone-white"
             initial={{ opacity: 0, y: 18 }}
@@ -58,6 +66,15 @@ export function WelcomeScreen() {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: DURATION.reveal, delay: 0.4, ease: EASE }}
+          >
+            {hero.thesis}
+          </motion.p>
+
+          <motion.p
+            className="mt-4 max-w-xl type-body-sm text-slate"
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: DURATION.reveal, delay: 0.46, ease: EASE }}
           >
             {hero.sub}
           </motion.p>

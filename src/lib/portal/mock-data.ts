@@ -22,13 +22,13 @@ export const mockStudent: PortalUser = {
 };
 
 export const mockJourney: JourneyStage[] = [
-  { id: "dream", code: "01", title: "Dream", description: "Your aviation career begins", status: "complete", percent: 100 },
-  { id: "learning", code: "02", title: "Learning", description: "Ground theory & foundations", status: "complete", percent: 100 },
-  { id: "training", code: "03", title: "Training", description: "Skills & systems mastery", status: "active", percent: 68, mentorNote: "Strong progress in navigation modules." },
-  { id: "examination", code: "04", title: "Examination", description: "DGCA licensing readiness", status: "upcoming", percent: 0 },
-  { id: "mentorship", code: "05", title: "Mentorship", description: "Guidance from working aviators", status: "upcoming" },
-  { id: "career", code: "06", title: "Career", description: "Industry readiness", status: "upcoming" },
-  { id: "flight_deck", code: "07", title: "Flight Deck", description: "Professional command", status: "upcoming" },
+  { id: "dream", code: "01", title: "Dream", description: "Free advisory call — eligibility, costs, and timeline", status: "complete", percent: 100 },
+  { id: "learning", code: "02", title: "Learning", description: "Weeks 1–12: navigation, meteorology, regulations", status: "complete", percent: 100 },
+  { id: "training", code: "03", title: "Training", description: "Batch classes, progress tracking, mentor check-ins", status: "active", percent: 68, mentorNote: "Strong progress in navigation modules." },
+  { id: "examination", code: "04", title: "Examination", description: "Mock papers, weak-area drills, exam-day prep", status: "upcoming", percent: 0 },
+  { id: "mentorship", code: "05", title: "Mentorship", description: "One-on-one sessions with working pilots", status: "upcoming" },
+  { id: "career", code: "06", title: "Career", description: "Airline readiness, interview prep, career mapping", status: "upcoming" },
+  { id: "flight_deck", code: "07", title: "Flight Deck", description: "Flying school — hours, check rides, command", status: "upcoming" },
 ];
 
 export const mockNextClass: ClassSession = {
