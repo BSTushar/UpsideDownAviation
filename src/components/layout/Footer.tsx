@@ -85,10 +85,11 @@ export function Footer() {
             <span className={colHeading}>Engage</span>
             <ul className="flex flex-col gap-4">
               <li>
-                <Link href="/enquire" className="gold-ring inline-flex rounded-pill">
-                  <span className="relative z-[1] inline-flex min-h-[44px] items-center justify-center rounded-pill bg-void px-6 py-2.5 font-inktrap text-body-sm font-semibold text-bone-white transition-colors hover:bg-surface">
-                    Enquire
-                  </span>
+                <Link
+                  href="/enquire"
+                  className="inline-flex min-h-[44px] items-center justify-center rounded-pill border border-[#6ba3d4]/55 bg-transparent px-6 py-2.5 font-inktrap text-body-sm font-semibold text-bone-white transition-all duration-standard hover:border-[#6ba3d4] hover:bg-[#6ba3d4]/15 hover:shadow-[0_0_20px_rgba(107,163,212,0.2)]"
+                >
+                  Enquire
                 </Link>
               </li>
               <li>

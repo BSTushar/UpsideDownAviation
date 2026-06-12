@@ -142,31 +142,6 @@
     pointer-events: none;
   }
 
-  /* Clockwise rotating gold border for primary CTAs */
-  .gold-ring {
-    position: relative;
-    padding: 2px;
-    isolation: isolate;
-  }
-
-  .gold-ring::before {
-    content: "";
-    position: absolute;
-    inset: -50%;
-    z-index: 0;
-    background: conic-gradient(
-      from 0deg,
-      transparent 0deg,
-      rgba(212, 175, 122, 0.25) 50deg,
-      #d4af7a 120deg,
-      #f5e6c8 180deg,
-      #d4af7a 240deg,
-      rgba(212, 175, 122, 0.25) 310deg,
-      transparent 360deg
-    );
-    animation: gold-ring-spin 2.8s linear infinite;
-  }
-
   /* Technical grid — hero / platform sections */
   .industrial-grid {
     background-image:
@@ -204,12 +179,6 @@
   50% {
     opacity: 1;
     transform: scale(1.06);
-  }
-}
-
-@keyframes gold-ring-spin {
-  to {
-    transform: rotate(360deg);
   }
 }
 

@@ -96,20 +96,13 @@ export function Navigation() {
             <Link
               href="/enquire"
               className={cn(
-                "gold-ring hidden whitespace-nowrap rounded-pill md:inline-flex",
-                scrolled || open ? "" : ""
+                "hidden whitespace-nowrap rounded-pill px-5 py-2.5 font-inktrap text-body-sm font-semibold transition-all duration-[900ms] ease-signature hover:-translate-y-0.5 md:inline-flex",
+                scrolled || open
+                  ? "bg-[#07111F] text-white hover:bg-[#0E1C2F]"
+                  : "bg-accent text-[#07111F] hover:bg-[#e8d5b0]"
               )}
             >
-              <span
-                className={cn(
-                  "relative z-[1] inline-flex rounded-pill px-5 py-2.5 font-inktrap text-body-sm font-semibold transition-all duration-[900ms] ease-signature hover:-translate-y-0.5",
-                  scrolled || open
-                    ? "bg-[#07111F] text-white hover:bg-[#0E1C2F]"
-                    : "bg-accent text-[#07111F] hover:bg-[#e8d5b0]"
-                )}
-              >
-                Speak to an Advisor
-              </span>
+              Speak to an Advisor
             </Link>
             <button
               type="button"
@@ -165,11 +158,9 @@ export function Navigation() {
                 <Link
                   href="/enquire"
                   onClick={() => setOpen(false)}
-                  className="gold-ring flex w-full rounded-pill"
+                  className="flex w-full justify-center rounded-pill bg-[#07111F] px-5 py-3 font-inktrap text-body-sm font-semibold text-white"
                 >
-                  <span className="relative z-[1] flex w-full justify-center rounded-pill bg-[#07111F] px-5 py-3 font-inktrap text-body-sm font-semibold text-white">
-                    Speak to an Advisor
-                  </span>
+                  Speak to an Advisor
                 </Link>
               </li>
             </ul>
