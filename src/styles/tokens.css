@@ -1,0 +1,155 @@
+/**
+ * Upside Down Aviation — Color System
+ * Background #07111F · Surface #0E1C2F · Accent #D4AF7A (champagne gold) · Text #FFFFFF
+ * Accent harmonizes with logo gold — softer, not identical.
+ */
+
+:root {
+  /* ── Core palette ── */
+  --color-void: #07111f;
+  --color-surface: #0e1c2f;
+  --color-accent: #d4af7a;
+  --color-bone-white: #ffffff;
+  --color-error: #ff8d80;
+
+  /* ── Derived tokens (aliases for Tailwind classes) ── */
+  --color-ash: #ffffff;
+  --color-slate: #a8b4c4;
+  --color-graphite: #1a3049;
+  --color-smoke: #7a8fa3;
+  --color-iron: #243b55;
+  --color-cinder: #0a1628;
+  --color-iris: #d4af7a;
+  --color-plum: #d4af7a;
+  --color-aubergine: #0a1628;
+  --color-storm-gray: #2a4563;
+  --color-lavender-wash: #e8d5b0;
+  --color-orchid-radial: #d4af7a;
+  --color-amethyst-band: #d4af7a;
+
+  --gradient-sky-radial: radial-gradient(
+    circle closest-corner at 20% 20%,
+    rgba(212, 175, 122, 0.16),
+    rgba(7, 17, 31, 0) 55%
+  );
+  --gradient-horizon: linear-gradient(
+    180deg,
+    rgba(7, 17, 31, 0.2) 0%,
+    rgba(7, 17, 31, 0.85) 55%,
+    #07111f 100%
+  );
+  --gradient-accent-band: linear-gradient(
+    90deg,
+    #07111f 0%,
+    rgba(212, 175, 122, 0.14) 50%,
+    #07111f 100%
+  );
+
+  --gradient-card-a: linear-gradient(145deg, #0e1c2f 0%, #152a42 100%);
+  --gradient-card-b: linear-gradient(145deg, #0e1c2f 0%, #122840 100%);
+  --gradient-card-c: linear-gradient(145deg, #0e1c2f 0%, #183048 100%);
+  --gradient-card-d: linear-gradient(145deg, #0e1c2f 0%, #142638 100%);
+
+  /* Legacy gradient names → map to card variants */
+  --gradient-dawn-violet: var(--gradient-card-a);
+  --gradient-violet-magenta: var(--gradient-card-b);
+  --gradient-teal-violet: var(--gradient-card-c);
+  --gradient-pink-purple: var(--gradient-card-d);
+  --gradient-orchid-radial: var(--gradient-sky-radial);
+  --gradient-amethyst-band: var(--gradient-accent-band);
+
+  /* ── Surfaces ── */
+  --surface-void: var(--color-void);
+  --surface-panel: var(--color-surface);
+  --surface-cinder: var(--color-cinder);
+  --surface-graphite: var(--color-graphite);
+  --surface-accent: var(--color-accent);
+  --surface-glass: rgba(14, 28, 47, 0.72);
+  --surface-glass-border: rgba(212, 175, 122, 0.22);
+
+  /* ── Typography ── */
+  --font-whyte-inktrap: var(--font-inktrap), ui-sans-serif, system-ui, sans-serif;
+  --font-whyte-inktrap-mono: var(--font-inktrap-mono), ui-monospace, monospace;
+  --font-grandslang: var(--font-editorial), ui-serif, Georgia, serif;
+
+  --text-caption: 10px;
+  --leading-caption: 1.5;
+  --tracking-caption: 0.07em;
+  --text-body-sm: 14px;
+  --leading-body-sm: 1.5;
+  --tracking-body-sm: -0.009em;
+  --text-body: 16px;
+  --leading-body: 1.5;
+  --tracking-body: -0.009em;
+  --text-subheading: 20px;
+  --leading-subheading: 1.25;
+  --tracking-subheading: -0.01em;
+  --text-heading-sm: 24px;
+  --leading-heading-sm: 1.2;
+  --tracking-heading-sm: -0.01em;
+  --text-heading: clamp(24px, 5.5vw, 32px);
+  --leading-heading: 1.2;
+  --tracking-heading: -0.03em;
+  --text-heading-lg: clamp(30px, 7vw, 48px);
+  --leading-heading-lg: 1.11;
+  --tracking-heading-lg: -0.04em;
+  --text-display: clamp(40px, 10vw, 88px);
+  --leading-display: 0.95;
+  --tracking-display: -0.05em;
+  --text-display-mono: clamp(36px, 9vw, 74px);
+  --leading-display-mono: 0.9;
+  --tracking-display-mono: 0.2em;
+  --text-editorial: clamp(40px, 10vw, 88px);
+  --leading-editorial: 0.85;
+  --tracking-editorial: -0.03em;
+
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --spacing-unit: 4px;
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-64: 64px;
+  --spacing-72: 72px;
+  --spacing-80: 80px;
+  --spacing-96: 96px;
+  --spacing-128: 128px;
+  --spacing-136: 136px;
+  --spacing-160: 160px;
+
+  --page-max-width: 1040px;
+  --section-gap: 80px;
+  --card-padding: 24px;
+  --element-gap: 16px;
+
+  --radius-nav: 8px;
+  --radius-cards: 19.2px;
+  --radius-badges: 8px;
+  --radius-inputs: 8px;
+  --radius-buttons: 9999px;
+  --radius-icon: 8px;
+
+  --shadow-subtle: rgba(0, 0, 0, 0.25) 0px 1px 2px 0px;
+  --shadow-accent-glow: 0 0 18px rgba(212, 175, 122, 0.32);
+  --shadow-iris-glow: var(--shadow-accent-glow);
+  --shadow-nav: var(--shadow-subtle);
+
+  --ease-signature: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-instant: 150ms;
+  --dur-micro: 250ms;
+  --dur-standard: 300ms;
+  --dur-reveal: 700ms;
+  --dur-cinematic: 800ms;
+  --stagger-sm: 80ms;
+  --stagger-md: 120ms;
+}

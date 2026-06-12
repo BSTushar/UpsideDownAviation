@@ -1,0 +1,85 @@
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  content: ["./src/**/*.{ts,tsx}"],
+  theme: {
+    extend: {
+      colors: {
+        void: "var(--color-void)",
+        surface: "var(--color-surface)",
+        accent: "var(--color-accent)",
+        "bone-white": "var(--color-bone-white)",
+        error: "var(--color-error)",
+        ash: "var(--color-ash)",
+        slate: "var(--color-slate)",
+        graphite: "var(--color-graphite)",
+        smoke: "var(--color-smoke)",
+        iron: "var(--color-iron)",
+        cinder: "var(--color-cinder)",
+        iris: "var(--color-accent)",
+        plum: "var(--color-accent)",
+        aubergine: "var(--color-aubergine)",
+        "storm-gray": "var(--color-storm-gray)",
+        "lavender-wash": "var(--color-lavender-wash)",
+      },
+      fontFamily: {
+        inktrap: ["var(--font-inktrap)", "ui-sans-serif", "system-ui", "sans-serif"],
+        "inktrap-mono": ["var(--font-inktrap-mono)", "ui-monospace", "monospace"],
+        editorial: ["var(--font-editorial)", "ui-serif", "Georgia", "serif"],
+        karla: ["var(--font-karla)", "ui-sans-serif", "system-ui", "sans-serif"],
+      },
+      fontSize: {
+        caption: ["var(--text-caption)", { lineHeight: "var(--leading-caption)", letterSpacing: "var(--tracking-caption)" }],
+        "body-sm": ["var(--text-body-sm)", { lineHeight: "var(--leading-body-sm)", letterSpacing: "var(--tracking-body-sm)" }],
+        body: ["var(--text-body)", { lineHeight: "var(--leading-body)", letterSpacing: "var(--tracking-body)" }],
+        subheading: ["var(--text-subheading)", { lineHeight: "var(--leading-subheading)", letterSpacing: "var(--tracking-subheading)" }],
+        "heading-sm": ["var(--text-heading-sm)", { lineHeight: "var(--leading-heading-sm)", letterSpacing: "var(--tracking-heading-sm)" }],
+        heading: ["var(--text-heading)", { lineHeight: "var(--leading-heading)", letterSpacing: "var(--tracking-heading)" }],
+        "heading-lg": ["var(--text-heading-lg)", { lineHeight: "var(--leading-heading-lg)", letterSpacing: "var(--tracking-heading-lg)" }],
+        display: ["var(--text-display)", { lineHeight: "var(--leading-display)", letterSpacing: "var(--tracking-display)" }],
+      },
+      spacing: {
+        section: "var(--section-gap)",
+        card: "var(--card-padding)",
+      },
+      maxWidth: { page: "var(--page-max-width)" },
+      borderRadius: {
+        nav: "var(--radius-nav)",
+        card: "var(--radius-cards)",
+        badge: "var(--radius-badges)",
+        input: "var(--radius-inputs)",
+        pill: "var(--radius-buttons)",
+        icon: "var(--radius-icon)",
+      },
+      boxShadow: {
+        subtle: "var(--shadow-subtle)",
+        "accent-glow": "var(--shadow-accent-glow)",
+        "iris-glow": "var(--shadow-accent-glow)",
+        nav: "var(--shadow-nav)",
+      },
+      transitionTimingFunction: { signature: "var(--ease-signature)" },
+      transitionDuration: {
+        micro: "var(--dur-micro)",
+        standard: "var(--dur-standard)",
+        reveal: "var(--dur-reveal)",
+      },
+      backgroundImage: {
+        "sky-radial": "var(--gradient-sky-radial)",
+        "horizon": "var(--gradient-horizon)",
+        "accent-band": "var(--gradient-accent-band)",
+        "card-a": "var(--gradient-card-a)",
+        "card-b": "var(--gradient-card-b)",
+        "card-c": "var(--gradient-card-c)",
+        "card-d": "var(--gradient-card-d)",
+        "orchid-radial": "var(--gradient-sky-radial)",
+        "dawn-violet": "var(--gradient-card-a)",
+        "violet-magenta": "var(--gradient-card-b)",
+        "teal-violet": "var(--gradient-card-c)",
+        "pink-purple": "var(--gradient-card-d)",
+      },
+    },
+  },
+  plugins: [],
+};
+
+export default config;

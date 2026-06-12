@@ -1,0 +1,216 @@
+@import "./tokens.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "./typography.css";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+  }
+
+  body {
+    font-family: var(--font-whyte-inktrap);
+    font-size: var(--text-body);
+    line-height: var(--leading-body);
+    letter-spacing: var(--tracking-body);
+    background-color: var(--color-void);
+    color: var(--color-bone-white);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a:not([class]) {
+    transition: color var(--dur-standard) var(--ease-signature);
+  }
+
+  ::selection {
+    background-color: var(--color-iris);
+    color: var(--color-void);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-iris);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Boarding Pass Glass Panel — design.pdf spec */
+  .glass-panel {
+    background: var(--surface-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--surface-glass-border);
+    border-radius: var(--radius-cards);
+    padding: var(--card-padding);
+  }
+
+  /* Liquid glass variant (gradient border pseudo) */
+  .liquid-glass {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: none;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .liquid-glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.2px;
+    background: linear-gradient(
+      180deg,
+      rgba(212, 175, 122, 0.42) 0%,
+      rgba(255, 255, 255, 0.1) 22%,
+      rgba(255, 255, 255, 0) 45%,
+      rgba(255, 255, 255, 0) 60%,
+      rgba(255, 255, 255, 0.1) 80%,
+      rgba(212, 175, 122, 0.32) 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .section-container {
+    width: 100%;
+    max-width: var(--page-max-width);
+    margin-inline: auto;
+    padding-inline: var(--spacing-24);
+  }
+
+  @media (min-width: 768px) {
+    .section-container {
+      padding-inline: var(--spacing-48);
+    }
+  }
+
+  .ambient-glow {
+    background: var(--gradient-orchid-radial);
+    pointer-events: none;
+  }
+
+  .hairline-border {
+    border: 1px solid var(--color-ash);
+  }
+
+  .structural-border {
+    border: 1px solid var(--color-storm-gray);
+  }
+
+  /* Industrial interactive surfaces */
+  .interactive-surface {
+    transition:
+      transform var(--dur-standard) var(--ease-signature),
+      border-color var(--dur-standard) var(--ease-signature),
+      box-shadow var(--dur-standard) var(--ease-signature),
+      background-color var(--dur-standard) var(--ease-signature);
+  }
+
+  .interactive-surface:hover {
+    transform: translateY(-2px);
+    border-color: rgba(212, 175, 122, 0.38);
+    box-shadow: var(--shadow-accent-glow);
+  }
+
+  .interactive-surface:active {
+    transform: translateY(0);
+  }
+
+  /* Soft halo behind full logo — matches wing tone, not harsh yellow */
+  .brand-halo {
+    position: absolute;
+    inset: -28%;
+    border-radius: 9999px;
+    background: radial-gradient(
+      circle,
+      rgba(212, 175, 122, 0.32) 0%,
+      rgba(212, 175, 122, 0.1) 45%,
+      transparent 70%
+    );
+    filter: blur(18px);
+    animation: brand-halo-pulse 4.5s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  /* Technical grid — hero / platform sections */
+  .industrial-grid {
+    background-image:
+      linear-gradient(rgba(212, 175, 122, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(212, 175, 122, 0.05) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 20%, transparent 75%);
+  }
+
+}
+
+/* Blinking caret for typewriter headlines */
+.type-caret {
+  display: inline-block;
+  width: 0.07em;
+  height: 0.92em;
+  margin-left: 0.08em;
+  vertical-align: -0.08em;
+  background: var(--color-accent);
+  animation: caret-blink 0.85s steps(2, start) infinite;
+}
+
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes brand-halo-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.skip-link {
+  position: fixed;
+  left: var(--spacing-16);
+  top: var(--spacing-16);
+  z-index: 100;
+  transform: translateY(-220%);
+  opacity: 0;
+  pointer-events: none;
+  border-radius: var(--radius-nav);
+  background: var(--color-iris);
+  color: var(--color-void);
+  padding: var(--spacing-8) var(--spacing-16);
+  font-weight: var(--font-weight-medium);
+  transition: transform var(--dur-micro) var(--ease-signature);
+}
+.skip-link:focus {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
