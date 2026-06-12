@@ -14,10 +14,10 @@ export const SITE = {
 } as const;
 
 export const NAV_LINKS = [
-  { label: "Programs", href: "#programs" },
-  { label: "Journey", href: "#journey" },
-  { label: "About", href: "#why" },
-  { label: "Vision", href: "#vision" },
+  { label: "Programs", href: "/#programs" },
+  { label: "Journey", href: "/#journey" },
+  { label: "About", href: "/#why" },
+  { label: "Vision", href: "/#vision" },
 ] as const;
 
 export function whatsappLink(prefill = "Hi Upside Down Aviation, I'd like to know more.") {

@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { vision } from "@/content/sections";
 import { Badge } from "@/components/ui/Badge";
@@ -10,22 +8,10 @@ import { Stagger, StaggerItem } from "@/components/motion/Stagger";
 import { TypeText } from "@/components/motion/TypeText";
 
 export function FutureVision() {
-  const [imgError, setImgError] = useState(false);
-
   return (
     <section id="vision" className="relative scroll-mt-24 overflow-hidden py-section">
       <div className="absolute inset-0 bg-void">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0a2540] to-void" aria-hidden />
-        {!imgError && (
-          <Image
-            src="/images/vision.jpg"
-            alt=""
-            fill
-            className="object-cover opacity-25 mix-blend-luminosity"
-            sizes="100vw"
-            onError={() => setImgError(true)}
-          />
-        )}
         <div className="absolute inset-0 bg-gradient-to-r from-void via-void/90 to-transparent" />
         <div className="absolute inset-0 bg-sky-radial opacity-30" />
       </div>

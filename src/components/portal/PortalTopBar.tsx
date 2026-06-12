@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Menu, Bell, LogOut } from "lucide-react";
-import { useState } from "react";
 import { cn } from "@/lib/cn";
 import { SITE } from "@/lib/constants";
 import { BrandLogo } from "@/components/brand/BrandLogo";
+import { clearPreviewSession } from "@/lib/portal/preview";
 import { NAV_TOUR_IDS } from "@/lib/portal/tour-steps";
 import type { NavItem, PortalUser } from "@/lib/portal/types";
 
@@ -20,7 +20,13 @@ type Props = {
 
 export function PortalTopBar({ nav, user, unreadCount = 0, onMenuToggle, variant = "student" }: Props) {
   const pathname = usePathname();
+  const router = useRouter();
   const announcementsHref = variant === "student" ? "/portal/announcements" : "/admin/announcements";
+
+  const signOut = () => {
+    clearPreviewSession();
+    router.push("/portal/login");
+  };
 
   return (
     <header className="sticky top-0 z-40 border-b border-graphite bg-void/95 backdrop-blur-md">
@@ -85,13 +91,14 @@ export function PortalTopBar({ nav, user, unreadCount = 0, onMenuToggle, variant
             </span>
             <span className="type-body-sm text-bone-white">{user.name.split(" ")[0]}</span>
           </Link>
-          <Link
-            href="/portal/login"
+          <button
+            type="button"
+            onClick={signOut}
             className="rounded-icon border border-storm-gray p-2 text-slate transition-colors hover:border-iris hover:text-bone-white"
             aria-label="Sign out"
           >
             <LogOut className="h-4 w-4" strokeWidth={1.5} />
-          </Link>
+          </button>
         </div>
       </div>
     </header>

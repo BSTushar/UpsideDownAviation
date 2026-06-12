@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
 import { ChevronDown, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
 import { hero } from "@/content/sections";
@@ -13,23 +11,10 @@ import { Navigation } from "@/components/layout/Navigation";
 import { TypeText } from "@/components/motion/TypeText";
 
 function HeroBackground() {
-  const [imgError, setImgError] = useState(false);
-
   return (
     <div className="absolute inset-0">
       <div className="industrial-grid absolute inset-0 opacity-30" aria-hidden />
       <div className="absolute inset-0 bg-gradient-to-b from-[#0c2038] via-[#07111f] to-[#07111f]" aria-hidden />
-      {!imgError && (
-        <Image
-          src="/images/hero.jpg"
-          alt=""
-          fill
-          priority
-          className="object-cover opacity-35 mix-blend-luminosity"
-          sizes="100vw"
-          onError={() => setImgError(true)}
-        />
-      )}
       <div className="absolute inset-0 bg-horizon" />
       <div className="absolute inset-0 bg-sky-radial opacity-40" />
     </div>

@@ -3,12 +3,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CommandPanel } from "@/components/portal/CommandPanel";
 import { PreviewNameGate } from "@/components/portal/PreviewNameGate";
 import { Button } from "@/components/ui/Button";
 import { SITE } from "@/lib/constants";
-import { startPreviewSession } from "@/lib/portal/preview";
+import { isPreviewSession, startPreviewSession } from "@/lib/portal/preview";
 import { TypeText } from "@/components/motion/TypeText";
 import { useLoading } from "@/components/motion/LoadingProvider";
 
@@ -16,6 +16,12 @@ export default function PortalLoginPage() {
   const router = useRouter();
   const { startLoading } = useLoading();
   const [showNameGate, setShowNameGate] = useState(false);
+
+  useEffect(() => {
+    if (isPreviewSession()) {
+      router.replace("/portal/dashboard");
+    }
+  }, [router]);
 
   const enterPreview = (name: string) => {
     startLoading();

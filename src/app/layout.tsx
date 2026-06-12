@@ -39,9 +39,9 @@ export const metadata: Metadata = {
     siteName: SITE.name,
     title: `${SITE.name} — ${SITE.tagline}`,
     description: "Your aviation journey starts here. Train. Prepare. Fly.",
-    images: [{ url: "/og/default.jpg", width: 1200, height: 630, alt: SITE.name }],
+    images: [{ url: "/logo-full.png", width: 512, height: 512, alt: SITE.name }],
   },
-  twitter: { card: "summary_large_image", title: SITE.name, images: ["/og/default.jpg"] },
+  twitter: { card: "summary_large_image", title: SITE.name, images: ["/logo-full.png"] },
   alternates: { canonical: SITE.url },
   robots: { index: true, follow: true },
   icons: {

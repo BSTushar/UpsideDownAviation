@@ -16,7 +16,7 @@ const interests = [
 ] as const;
 
 export function InquiryForm() {
-  const { startLoading, stopLoading } = useLoading();
+  const { startLoading } = useLoading();
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const nameId = useId();
@@ -56,8 +56,8 @@ export function InquiryForm() {
         body: JSON.stringify(parsed.data),
       });
       setStatus(res.ok ? "success" : "error");
-    } finally {
-      stopLoading();
+    } catch {
+      setStatus("error");
     }
   }
 
@@ -96,6 +96,7 @@ export function InquiryForm() {
 
       <Checkbox
         name="consent"
+        required
         label={
           <>
             I agree to be contacted and accept the{" "}
