@@ -49,7 +49,8 @@
     skip.className = 'aw-intro__skip'; skip.textContent = 'Skip \u21B5';
     stage.appendChild(cv); root.appendChild(stage);
     if (opts.skip !== false) root.appendChild(skip);
-    (document.body || document.documentElement).appendChild(root);
+    /* Mount on <html> so body blur during fly-through does not blur the overlay */
+    document.documentElement.appendChild(root);
     clearPending();
     var ctx = cv.getContext('2d');
 

@@ -26,6 +26,11 @@
     overflow: hidden;
   }
 
+  /* Cabin intro mounts on <html> — stays sharp while body blurs underneath */
+  .aw-intro {
+    filter: none !important;
+  }
+
   body {
     font-family: var(--font-whyte-inktrap);
     font-size: var(--text-body);

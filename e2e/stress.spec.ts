@@ -257,6 +257,26 @@ test.describe("Window intro safety", () => {
       )
       .toBe(true);
   });
+
+  test("intro canvas renders visible window (not black screen)", async ({ page }) => {
+    await page.addInitScript(() => sessionStorage.removeItem("aw-intro-played"));
+    await page.goto("/");
+    await page.waitForTimeout(1200);
+    const stats = await page.evaluate(() => {
+      const intro = document.querySelector(".aw-intro");
+      const cv = document.querySelector(".aw-intro__cv") as HTMLCanvasElement | null;
+      if (!intro || !cv) return { ok: false, reason: "missing overlay" };
+      if (intro.parentElement?.tagName !== "HTML") return { ok: false, reason: "wrong mount" };
+      const ctx = cv.getContext("2d");
+      if (!ctx) return { ok: false, reason: "no ctx" };
+      const d = ctx.getImageData(0, 0, cv.width, cv.height).data;
+      let bright = 0;
+      for (let i = 0; i < d.length; i += 4) if (d[i] + d[i + 1] + d[i + 2] > 80) bright++;
+      const pct = bright / (cv.width * cv.height);
+      return { ok: pct > 0.05, pct, parent: intro.parentElement?.tagName };
+    });
+    expect(stats.ok, JSON.stringify(stats)).toBe(true);
+  });
 });
 
 function validInquiry() {
