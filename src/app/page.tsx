@@ -1,5 +1,11 @@
 import { WelcomeExperience } from "@/components/welcome/WelcomeExperience";
+import { WindowIntro } from "@/components/motion/WindowIntro";
 
 export default function Home() {
-  return <WelcomeExperience />;
+  return (
+    <>
+      <WindowIntro />
+      <WelcomeExperience />
+    </>
+  );
 }
